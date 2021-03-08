@@ -20,6 +20,24 @@ class Product(models.Model):
     Description: main user model
     auther: pandeyhitesh
 '''
+class UserAuth(models.Model):
+    username = models.CharField(max_length=200, unique=True)
+    
+    category = models.CharField(max_length=200, null=False, blank=False)
+    price = models.DecimalField(max_digits=4,decimal_places=2)
+    description = models.TextField()
+    stars = models.IntegerField()
+
+    def __str__(self):
+        return self.name
+
+
+
+'''
+    name: CsaAll
+    Description: main user model
+    auther: pandeyhitesh
+'''
 class CsaAll(models.Model):
 
     class UserType(models.IntegerChoices):
@@ -37,7 +55,7 @@ class CsaAll(models.Model):
     name = models.CharField(max_length=200)
     username = models.CharField(max_length=200, unique=True)
     user_type = models.IntegerField(choices=UserType.choices)
-    date_of_passing = models.IntegerField(max_length=4)
+    date_of_passing = models.IntegerField()
     hometown = models.CharField(max_length=200)
     gender = models.IntegerField(choices=GenderType.choices)
     email = models.CharField(max_length=200,unique = True)
@@ -66,7 +84,7 @@ class CsaAll(models.Model):
 # fs = FileSystemStorage(location='/media/photos')
 class NoticeModel(models.Model):
     header = models.CharField(max_length=200)
-    published_date = models.DateTimeField(auto_now=True,default=datetime.now)
+    # published_date = models.DateTimeField(auto_now=True,default=datetime.now
     notice_pdf = models.FileField(upload_to='notices',)
 
     class Meta:
@@ -79,14 +97,14 @@ class NoticeModel(models.Model):
 
 
 '''
-    name: NoticeModel
-    Description: main user model
+    name: EventModel
+    Description: Model for events
     auther: pandeyhitesh
 '''
 
 class EventsModel(models.Model):
     header = models.CharField(max_length=200)
-    event_date = models.DateTimeField(auto_now=True,default=datetime.now)
+    # event_date = models.DateTimeField(auto_now=True,default=datetime.now)
     thumbnail_image = models.ImageField(upload_to='notices')
     description = models.CharField(max_length=500)
 
