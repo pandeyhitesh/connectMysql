@@ -88,18 +88,31 @@ class CsaAll(models.Model):
 
 
 '''
-    name: Student_model
+    name: Project_category_model
     Description: main user model
     auther: pandeyhitesh
 '''
-class Student_model(models.Model):
-    student = models.ForeignKey(CsaAll , null=True, on_delete=models.SET_NULL)
-    year_of_admission = models.DateField()
-    post_nominals = ListCharField(
-        base_field=models.CharField(max_length=100),
-        size=6,
-        max_length=(6 * 101)  # 6 * 10 character nominals, plus commas
+class Project_category_model(models.Model):
+    category_id = models.AutoField(primary_key=True)
+    category_name = models.CharField(max_length=50)
+
+
+
+
+'''
+    name: project_specification_model
+    Description: main user model
+    auther: pandeyhitesh
+'''
+class project_specification_model(models.Model):
+    spec_platform = models.CharField(max_length=100)
+    spec_languages = ListCharField(
+        base_field=models.CharField(max_length=20),
+        size=10,
+        max_length=(10 * 21)  # 6 * 10 character nominals, plus commas
     )
+
+
 
 
 '''
@@ -119,29 +132,35 @@ class Project_model(models.Model):
     project_specification = models.ManyToManyField(project_specification_model)
     
 
+
+'''~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'''
+
+
+
+
+
 '''
-    name: Project_category_model
+    name: Student_model
     Description: main user model
     auther: pandeyhitesh
 '''
-class Project_category_model(models.Model):
-    category_id = models.AutoField(primary_key=True)
-    category_name = models.CharField(max_length=50)
-
-
-
-'''
-    name: project_specification_model
-    Description: main user model
-    auther: pandeyhitesh
-'''
-class project_specification_model(models.Model):
-    spec_platform = models.CharField(max_length=100)
-    spec_languages = ListCharField(
+class Student_model(models.Model):
+    student = models.ForeignKey(CsaAll , null=True, on_delete=models.SET_NULL)
+    year_of_admission = models.DateField()
+    field_of_interest = ListCharField(
         base_field=models.CharField(max_length=100),
-        size=10,
+        size=6,
         max_length=(6 * 101)  # 6 * 10 character nominals, plus commas
     )
+    projects_done = models.ManyToManyField(Project_model)
+    skills = ListCharField(
+        base_field=models.CharField(max_length=100),
+        size=6,
+        max_length=(6 * 101)  # 6 * 10 character nominals, plus commas
+    )
+
+
+
 
 
 '''

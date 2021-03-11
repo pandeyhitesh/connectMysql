@@ -1,12 +1,44 @@
 from rest_framework import serializers
 from . models import Product
-
+from . models import CsaAll
+from . models import Student_model, NoticeModel, EventsModel, Project_model
 from django.contrib.auth.models import User
 
 
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
+        fields = '__all__'
+
+
+
+class CSAUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CsaAll
+        fields = '__all__'
+
+
+class StudentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Student_model
+        fields = '__all__'
+
+
+class NoticeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = NoticeModel
+        fields = '__all__'
+
+
+class EventSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EventsModel
+        fields = '__all__'
+
+
+class ProjectSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Project_model
         fields = '__all__'
 
 
