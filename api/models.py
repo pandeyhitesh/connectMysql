@@ -81,56 +81,11 @@ class CsaAll(models.Model):
     def __str__(self):
         return self.name
 
-'''~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'''
 
 
 
 
 
-'''
-    name: Project_category_model
-    Description: main user model
-    auther: pandeyhitesh
-'''
-class Project_category_model(models.Model):
-    category_id = models.AutoField(primary_key=True)
-    category_name = models.CharField(max_length=50)
-
-
-
-
-'''
-    name: project_specification_model
-    Description: main user model
-    auther: pandeyhitesh
-'''
-class project_specification_model(models.Model):
-    spec_platform = models.CharField(max_length=100)
-    spec_languages = ListCharField(
-        base_field=models.CharField(max_length=20),
-        size=10,
-        max_length=(10 * 21)  # 6 * 10 character nominals, plus commas
-    )
-
-
-
-
-'''
-    name: Student_model
-    Description: main user model
-    auther: pandeyhitesh
-'''
-class Project_model(models.Model):
-    project_id = models.AutoField(primary_key=True)
-    author_id = models.ManyToManyField(Student_model)
-    categories = models.ManyToManyField(Project_category_model)
-    project_title = models.CharField(max_length=100)
-    project_subtitle = models.CharField(max_length=100)
-    project_domain = models.CharField(max_length=100)
-    project_logo = models.ImageField(upload_to='project_logos')
-    project_description = models.CharField(max_length=300)
-    project_specification = models.ManyToManyField(project_specification_model)
-    
 
 
 '''~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'''
@@ -148,16 +103,75 @@ class Student_model(models.Model):
     student = models.ForeignKey(CsaAll , null=True, on_delete=models.SET_NULL)
     year_of_admission = models.DateField()
     field_of_interest = ListCharField(
-        base_field=models.CharField(max_length=100),
+        base_field =models.CharField(max_length=100),
         size=6,
         max_length=(6 * 101)  # 6 * 10 character nominals, plus commas
     )
-    projects_done = models.ManyToManyField(Project_model)
+    projects_done = ListCharField(
+        base_field =models.CharField(max_length=100),
+        size=6,
+        max_length=(6 * 101)  # 6 * 10 character nominals, plus commas
+    )
     skills = ListCharField(
-        base_field=models.CharField(max_length=100),
+        base_field =models.CharField(max_length=100),
         size=6,
         max_length=(6 * 101)  # 6 * 10 character nominals, plus commas
     )
+
+
+
+
+
+'''~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'''
+
+
+
+
+
+'''
+    name: Project_category_model
+    Description: main user model
+    auther: pandeyhitesh
+'''
+class Project_category_model(models.Model):
+    category_id = models.AutoField(primary_key=True,default=1, editable=False)
+    category_name = models.CharField(max_length=50)
+
+
+
+
+'''
+    name: project_specification_model
+    Description: main user model
+    auther: pandeyhitesh
+'''
+class project_specification_model(models.Model):
+    spec_platform = models.CharField(max_length=100)
+    spec_languages = ListCharField(
+        base_field = models.CharField(max_length=20),
+        size=10,
+        max_length=(10 * 21)  # 6 * 10 character nominals, plus commas
+    )
+
+
+
+
+'''
+    name: Project_model
+    Description: main user model
+    auther: pandeyhitesh
+'''
+class Project_model(models.Model):
+    project_id = models.AutoField(primary_key=True,default=1, editable=False)
+    author_id = models.ManyToManyField(Student_model)
+    categories = models.ManyToManyField(Project_category_model)
+    project_title = models.CharField(max_length=100)
+    project_subtitle = models.CharField(max_length=100)
+    project_domain = models.CharField(max_length=100)
+    project_logo = models.ImageField(upload_to='project_logos')
+    project_description = models.CharField(max_length=300)
+    project_specification = models.ManyToManyField(project_specification_model)
+    
 
 
 
@@ -170,6 +184,7 @@ class Student_model(models.Model):
 '''
 # fs = FileSystemStorage(location='/media/photos')
 class NoticeModel(models.Model):
+    notice_id = models.AutoField(primary_key=True,default=1, editable=False)
     header = models.CharField(max_length=200)
     published_date = models.DateTimeField(auto_now_add=True)
     notice_pdf = models.FileField(upload_to='notices',)
@@ -193,6 +208,7 @@ class NoticeModel(models.Model):
 '''
 
 class EventsModel(models.Model):
+    event_id = models.AutoField(primary_key=True,default=1, editable=False)
     header = models.CharField(max_length=200)
     event_date = models.DateTimeField(auto_now_add=True)
     thumbnail_image = models.ImageField(upload_to='events')

@@ -6,6 +6,18 @@ from . serializers import ProductSerializer
 from . models import Product
 from . models import CsaAll, Student_model, NoticeModel, EventsModel
 
+from django.contrib.auth import login
+from rest_framework.authtoken.serializers import AuthTokenSerializer
+from knox.views import LoginView as KnoxLoginView
+from api.serializers import CSAUserSerializer, EventSerializer, NoticeSerializer, ProjectSerializer, StudentSerializer
+from api.models import Project_model
+
+
+from rest_framework import generics, permissions
+from rest_framework.response import Response
+from knox.models import AuthToken
+from .serializers import UserSerializer, RegisterSerializer
+
 
 @api_view(['GET'])
 def apiOverview(request):
@@ -72,10 +84,6 @@ def deleteProduct(request,pk):
     APIs for User Registration
 '''
 
-from rest_framework import generics, permissions
-from rest_framework.response import Response
-from knox.models import AuthToken
-from .serializers import UserSerializer, RegisterSerializer
 
 # Register API
 class RegisterAPI(generics.GenericAPIView):
@@ -99,11 +107,6 @@ class RegisterAPI(generics.GenericAPIView):
 '''
 
 
-from django.contrib.auth import login
-
-
-from rest_framework.authtoken.serializers import AuthTokenSerializer
-from knox.views import LoginView as KnoxLoginView
 
 class LoginAPI(KnoxLoginView):
     permission_classes = (permissions.AllowAny,)
@@ -139,7 +142,7 @@ def showAllCsaUser(request):
     APIs for CSAAll Create User
 '''
 @api_view(['POST'])
-def createProduct(request):
+def createCsaUser(request):
     # product = Product.objects.get(id=pk)
 
     serializer = CSAUserSerializer(data=request.data)
@@ -151,8 +154,8 @@ def createProduct(request):
     APIs for CSAAll View one User
 '''
 @api_view(['GET'])
-def viewCsaUser(request,pk):
-    csa_user = CsaAll.objects.get(id=pk)
+def viewCsaUser(request,user_id):
+    csa_user = CsaAll.objects.get(user_id=user_id)
     serializer = CSAUserSerializer(csa_user, many=False)
     return Response(serializer.data)
 
@@ -227,7 +230,7 @@ def createStudent(request):
     APIs for StudentModel View one Student
 '''
 @api_view(['GET'])
-def viewCsaUser(request,pk):
+def viewStudent(request,pk):
     student = Student_model.objects.get(id=pk)
     serializer = StudentSerializer(student, many=False)
     return Response(serializer.data)
@@ -237,7 +240,7 @@ def viewCsaUser(request,pk):
     APIs for StudentModel Update A Student Detail
 '''
 @api_view(['POST'])
-def updateCsaUser(request,pk):
+def updateStudent(request,pk):
     student = Student_model.objects.get(id=pk)
     serializer = StudentSerializer(instance=student,data=request.data)
     
@@ -250,7 +253,7 @@ def updateCsaUser(request,pk):
     APIs for StudentModel Delete a Student
 '''
 @api_view(['GET'])
-def deleteCsaUser(request,pk):
+def deleteStudent(request,pk):
     student = Student_model.objects.get(id=pk)
     student.delete()
     
@@ -466,6 +469,6 @@ def updateProject(request,pk):
 @api_view(['GET'])
 def deleteProject(request,pk):
     project = Project_model.objects.get(id=pk)
-    student.delete()
+    project.delete()
     
     return Response('Project deleted successfully')
